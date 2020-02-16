@@ -25,7 +25,8 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
     { "firefox",  			 NULL,       NULL,        1 << 1,     False,       0 },
-	{ "discord",           	 NULL,       NULL,        1 << 2,     False,       0 },	
+	{ "discord",           	 NULL,       NULL,        1 << 2,     False,       0 },
+    { "spotify",             NULL,       NULL,        1 << 3,     False,       0 },    
 };
 
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
