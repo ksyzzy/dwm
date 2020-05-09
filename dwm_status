@@ -9,12 +9,13 @@ xset b off&
 xset s off&
 xset -dpms&
 picom&
-feh --bg-fill $HOME/.wall.jpg &
+feh --bg-fill $HOME/.wall2.jpg &
 redshift -l 52.2327:18.3036 -t 6500:3200&
 nm-applet --sm-disable&
 /usr/local/bin/st -e zsh &
-(sleep 2 && qutebrowser)&
-(sleep 2 && discord)&
+(sleep 2 && firefox)&
+(sleep 2 && discord-canary)&
+dunst -config&
 
 print_torrent(){
 	transmission-remote -l | grep % |

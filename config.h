@@ -1,6 +1,6 @@
 /* Last Update: 25-01-2020 */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int gappx     = 0;        /* gaps between windows */
+static const unsigned int gappx     = 30;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -26,8 +26,8 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 static const Rule rules[] = {
     { "firefox",  			 NULL,       NULL,        1 << 1,     False,       0 },
     { "qutebrowser",         NULL,       NULL,        1 << 1,     False,       0 },
-	{ "discord",           	 NULL,       NULL,        1 << 2,     False,       0 },
-    { "spotify",             NULL,       NULL,        1 << 3,     False,       0 },    
+	{ "discord",             NULL,       NULL,        1 << 2,     False,       0 },
+    { "Spotify",             NULL,       NULL,        1 << 3,     False,       0 },    
 };
 
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -51,8 +51,8 @@ static const Layout layouts[] = {
 
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
-static const char *termcmd[]  = { "st","-ce", "/bin/zsh" , NULL };
-static const char *print_screen_cmd[] = { "deepin-screenshot", NULL };
+static const char *termcmd[]  = { "st","-ce", "/bin/zsh" , NULL};
+static const char *print_screen_cmd[] = { "deepin-screen-recorder", NULL };
 static const char *print_screen_cmd_area[] = { "screenshot-area", NULL };
 static const char *cmdlock[]  = { "slock", NULL };
 static const char *dwmkill[]  = { "dwm-kill", NULL };
@@ -114,6 +114,7 @@ static Key keys[] = {
     { 0,             		 0x1008ff14,        spawn,          {.v = cmusplay }},
     { 0,             		 0x1008ff17,       	spawn,          {.v = cmusnext }},
     { 0,             	     0x1008ff16,        spawn,          {.v = cmusprev }},
+    { 0,                     0x1008ffb2,        spawn,          SHCMD ("amixer set Capture toggle")},
     /*{ MODKEY,                       XK_t,     		setlayout,      {.v = &layouts[0]} },*/
 	/*{ MODKEY,                       XK_f,      		setlayout,      {.v = &layouts[2]} },*/ 
 	/* { MODKEY|ShiftMask,             XK_q,      		spawn,          {.v = dwmkill } }, */ 

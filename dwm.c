@@ -341,7 +341,7 @@ applyrules(Client *c)
 			c->isfloating = r->isfloating;
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
-			if (m)
+			if (m) 
 				c->mon = m;
 		}
 	}
@@ -1893,29 +1893,46 @@ tagmon(const Arg *arg)
 void
 tile(Monitor *m)
 {
-	unsigned int i, n, h, mw, my, ty;
-	Client *c;
+    unsigned int i, n, h, mw, my, ty;
+    Client *c;
+    int gap = 0;
+    for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+    if (n == 0)
+        return;
 
-	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
-	if (n == 0)
-		return;
-
-	if (n > m->nmaster)
-		mw = m->nmaster ? m->ww * m->mfact : 0;
-	else
-		mw = m->ww - m->gappx;
-	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
-			resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, h - (2*c->bw), 0);
-			my += HEIGHT(c) + m->gappx;
-		} else {
-			h = (m->wh - ty) / (n - i) - m->gappx;
-			resize(c, m->wx + mw + m->gappx, m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->gappx, h - (2*c->bw), 0);
-			ty += HEIGHT(c) + m->gappx;
-		}
+    if (n > m->nmaster)
+        mw = m->nmaster ? m->ww * m->mfact : 0;
+    else
+        mw = m->ww - gap;
+    for (i = 0, my = ty = gap, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+        if (c->tags == (1 << 0)) {
+            gap = gappx;
+            mw -= gap;
+            if (i < m->nmaster) {
+                h = (m->wh - my) / (MIN(n, m->nmaster) - i) - gap;
+                resize(c, m->wx + gap, m->wy + my + gap, mw - (2*c->bw) - gap, h - (2*c->bw) - gap, 0);
+                my += HEIGHT(c) + gap;
+            } else {
+                h = (m->wh - ty) / (n - i) - gap;
+                resize(c, m->wx + mw + gap, m->wy + ty + gap, m->ww - mw - (2*c->bw) - 2*gap, h - (2*c->bw) - gap, 0);
+                ty += HEIGHT(c) + gap;
+            }
+            mw += gap;
+        }
+        else {
+            gap = 0;
+            if (i < m->nmaster) {
+                h = (m->wh - my) / (MIN(n, m->nmaster) - i) - gap;
+                resize(c, m->wx + gap, m->wy + my, mw - (2*c->bw) - gap, h - (2*c->bw), 0);
+                my += HEIGHT(c) + gap;
+            } else {
+                h = (m->wh - ty) / (n - i) - gap;
+                resize(c, m->wx + mw + gap, m->wy + ty, m->ww - mw - (2*c->bw) - 2*gap, h - (2*c->bw), 0);
+                ty += HEIGHT(c) + gap;
+            }
+        }
+    }
 }
-
 void
 togglebar(const Arg *arg)
 {
