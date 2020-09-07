@@ -345,6 +345,7 @@ applyrules(Client *c)
 				c->mon = m;
 		}
 	}
+
 	if (ch.res_class)
 		XFree(ch.res_class);
 	if (ch.res_name)
